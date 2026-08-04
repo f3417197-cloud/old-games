@@ -1,1 +1,81 @@
+/* تنسيق عام للموقع */
+body {
+    background-color: #121214;
+    color: #e1e1e6;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+header {
+    background-color: #1f2024;
+    padding: 20px;
+    border-bottom: 3px solid #8257e5;
+}
+
+.logo {
+    font-size: 28px;
+    font-weight: bold;
+    color: #8257e5;
+    text-shadow: 2px 2px #000;
+}
+
+/* تصميم كروت الألعاب */
+.games-container {
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 10px;
+}
+
+.game-card {
+    background-color: #1f2024;
+    border: 2px solid #29292e;
+    border-radius: 8px;
+    margin-bottom: 40px;
+    padding: 15px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+}
+
+.game-card h3 {
+    color: #04d361;
+    margin-top: 0;
+}
+
+.game-frame {
+    background: #000;
+    border-radius: 4px;
+    overflow: hidden;
+    border: 1px solid #8257e5;
+}
+
+.game-desc {
+    color: #a8a8b3;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+/* تصميم المساحات الإعلانية الخاصة بك لمنع الإعلانات العشوائية */
+.ad-space {
+    background-color: #202024;
+    border: 2px dashed #494d4b;
+    color: #8d8d99;
+    max-width: 728px;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+.header-ad {
+    margin-top: 20px;
+}
+
+footer {
+    background-color: #1f2024;
+    padding: 15px;
+    color: #7c7c8a;
+    font-size: 12px;
+    margin-top: 50px;
+}
 
