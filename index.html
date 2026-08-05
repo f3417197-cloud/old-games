@@ -3,97 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بوابة الألعاب القديمة - نوستالجيا</title>
-    <link rel="stylesheet" href="style.css">
+    <title>بوابة الألعاب السريعة - نوستالجيا</title>
+    <style>
+        body { background: #111; color: #fff; text-align: center; font-family: sans-serif; margin: 0; padding: 20px; }
+        header { background: #222; padding: 20px; border-radius: 10px; margin-bottom: 20px; }
+        .logo { font-size: 28px; font-weight: bold; color: #ffeb3b; }
+        .games-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; max-width: 1000px; margin: 0 auto; }
+        .game-card { background: #222; padding: 20px; border-radius: 10px; border: 2px solid #333; text-align: center; }
+        .game-icon { font-size: 40px; margin-bottom: 10px; }
+        .play-btn { display: inline-block; padding: 12px 24px; background: #e52521; color: #fff; text-decoration: none; border-radius: 25px; font-weight: bold; margin-top: 15px; }
+        .play-btn:hover { background: #b31815; }
+        footer { margin-top: 40px; color: #777; font-size: 14px; }
+    </style>
 </head>
 <body>
 
-    <!-- الهيدر أو شريط الرأس -->
     <header>
         <div class="logo">🎮 نوستالجيا جيمز</div>
-        <p>مرحباً بك في عالم ألعاب زمان - العب فوراً بضغطة زر</p>
+        <p>عالم ألعاب زمان - العب فوراً بدون تقطيع أو حظر</p>
     </header>
 
-    <!-- مكان الإعلان العلوي المخصص لك -->
-    <div class="ad-space header-ad">
-        <p>مساحة إعلانية آمنة (متوفر للإيجار تواصل معنا)</p>
-    </div>
-
-    <!-- المحتوى الرئيسي والألعاب -->
     <main class="games-container">
         
-        <!-- لعبة 1: ماريو -->
+        <!-- لعبة 1: سنيك الحية القديمة -->
         <div class="game-card">
-            <div class="game-icon">🍄</div>
-            <h3>لعبة سوبر ماريو الأصلية</h3>
-            <p class="game-desc">استرجع ذكريات الطفولة مع مغامرة ماريو الكلاسيكية.</p>
-            <a href="https://itch.io" target="_blank" class="play-btn">اضغط هنا لبدء اللعب فوراً 🎮</a>
+            <div class="game-icon">🐍</div>
+            <h3>لعبة الثعبان الأصلية</h3>
+            <p>لعبة الأتاري والنوكيا الشهيرة بتصميمها الكلاسيكي الممتع.</p>
+            <a href="https://google.com" target="_blank" class="play-btn" style="background: #4caf50;">ابدأ اللعب فوراً 🎮</a>
         </div>
 
-        <!-- لعبة 2: سونيك -->
+        <!-- لعبة 2: بومبرمان وتفجير الكتل -->
         <div class="game-card">
-            <div class="game-icon">🦔</div>
-            <h3>لعبة سونيك القنفذ</h3>
-            <p class="game-desc">العب بلعبة السرعة الشهيرة سونيك واجمع الحلقات الذهبية.</p>
-            <a href="https://itch.io" target="_blank" class="play-btn">اضغط هنا لبدء اللعب فوراً 🎮</a>
+            <div class="game-icon">💣</div>
+            <h3>لعبة تفجير القنابل الكلاسيكية</h3>
+            <p>العبة الشهيرة لتفجير الممرات ومحاربة الأعداء القديمة.</p>
+            <a href="https://google.com" target="_blank" class="play-btn" style="background: #ff9800;">ابدأ اللعب فوراً 🎮</a>
         </div>
 
-        <!-- لعبة 3: لعبة الجزيرة -->
+        <!-- لعبة 3: لعبة باكمان الشهيرة -->
         <div class="game-card">
-            <div class="game-icon">👦🏼</div>
-            <h3>لعبة الجزيرة والمغامرات - Adventure Island</h3>
-            <p class="game-desc">لعبة الاتاري الشهيرة، تحرك في الجزيرة، اجمع الفواكه وتجنب العقبات والأعداء.</p>
-            <a href="https://itch.io" target="_blank" class="play-btn">اضغط هنا لبدء اللعب فوراً 🎮</a>
+            <div class="game-icon">🟡</div>
+            <h3>لعبة باكمان - أكل النقاط</h3>
+            <p>التهم النقاط الصفراء واهرب من الأشباح الملونة في المتاهة الكلاسيكية.</p>
+            <a href="https://google.com" target="_blank" class="play-btn" style="background: #ffeb3b; color: #000;">ابدأ اللعب فوراً 🎮</a>
         </div>
 
-        <!-- مكان إعلان بين الألعاب -->
-        <div class="ad-space middle-ad">
-            <p>إعلانك هنا (نقبل فقط إعلانات المتاجر والألعاب الموثوقة وبدون موسيقى)</p>
-        </div>
-
-        <!-- لعبة 4: كراش -->
+        <!-- لعبة 4: لعبة التنس القديمة -->
         <div class="game-card">
-            <div class="game-icon">🦊</div>
-            <h3>لعبة كراش بانديكوت 1</h3>
-            <p class="game-desc">لعبة كراش الجزء الأول الشهير والمغامرات الممتعة.</p>
-            <a href="https://itch.io" target="_blank" class="play-btn">اضغط هنا لبدء اللعب فوراً 🎮</a>
-        </div>
-
-        <!-- لعبة 5: لعبة الدبابات -->
-        <div class="game-card">
-            <div class="game-icon">🪖</div>
-            <h3>لعبة الدبابات القديمة - Battle City</h3>
-            <p class="game-desc">احمِ القاعدة العسكرية ودمر دبابات الأعداء في واحدة من أشهر ألعاب الاتاري.</p>
-            <a href="https://itch.io" target="_blank" class="play-btn">اضغط هنا لبدء اللعب فوراً 🎮</a>
-        </div>
-
-        <!-- لعبة 6: علاء الدين -->
-        <div class="game-card">
-            <div class="game-icon">🧞‍♂️</div>
-            <h3>لعبة علاء الدين الشهيرة</h3>
-            <p class="game-desc">مغامرات علاء الدين والبحث عن المصباح السحري ومحاربة الأشرار.</p>
-            <a href="https://itch.io" target="_blank" class="play-btn">اضغط هنا لبدء اللعب فوراً 🎮</a>
-        </div>
-
-        <!-- لعبة 7: لعبة السيرك -->
-        <div class="game-card">
-            <div class="game-icon">🦁</div>
-            <h3>لعبة السيرك القديمة - Circus Charlie</h3>
-            <p class="game-desc">اقفز فوق النيران والأسود وتخطى الحواجز داخل السيرك الممتع.</p>
-            <a href="https://itch.io" target="_blank" class="play-btn">اضغط هنا لبدء اللعب فوراً 🎮</a>
-        </div>
-
-        <!-- لعبة 8: تيكن 3 -->
-        <div class="game-card">
-            <div class="game-icon">🥊</div>
-            <h3>لعبة القتال تيكن 3 - Tekken 3</h3>
-            <p class="game-desc">أقوى لعبة قتال ومصارعة كلاسيكية عشقها جيل الطيبين.</p>
-            <a href="https://itch.io" target="_blank" class="play-btn">اضغط هنا لبدء اللعب فوراً 🎮</a>
+            <div class="game-icon">🏓</div>
+            <h3>لعبة تنس الطاولة - أتاري</h3>
+            <p>أول لعبة أتاري في التاريخ، تنافس ضد الكمبيوتر وصد الكرة السريعة.</p>
+            <a href="https://google.com" target="_blank" class="play-btn" style="background: #00a2ff;">ابدأ اللعب فوراً 🎮</a>
         </div>
 
     </main>
 
-    <!-- الفوتر أو أسفل الموقع -->
     <footer>
         <p>© 2026 جميع الحقوق محفوظة لموقع نوستالجيا جيمز</p>
     </footer>
