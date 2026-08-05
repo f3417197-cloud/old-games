@@ -3,20 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لعبة الدبابات القديمة</title>
+    <title>لعبة حمار المعركة - الدبابات</title>
     <style>
-        body { background: #111; color: #fff; text-align: center; font-family: sans-serif; margin: 0; padding: 20px; }
-        .game-container { max-width: 800px; margin: 20px auto; background: #222; padding: 10px; border-radius: 10px; box-shadow: 0 0 15px rgba(0,0,0,0.5); }
-        iframe { width: 100%; height: 500px; border: none; border-radius: 5px; }
-        .back-btn { display: inline-block; padding: 12px 24px; background: #795548; color: white; text-decoration: none; border-radius: 25px; margin-top: 20px; font-weight: bold; }
+        body { background: #111; color: #fff; text-align: center; font-family: sans-serif; margin: 0; padding: 10px; }
+        .score-board { font-size: 20px; font-weight: bold; color: #4caf50; margin: 10px 0; }
+        canvas { background: #1a1a1a; display: block; margin: 10px auto; border: 4px solid #795548; border-radius: 10px; max-width: 95%; }
+        .btn-container { display: flex; justify-content: center; gap: 15px; margin-top: 10px; }
+        .btn { padding: 12px 25px; font-size: 16px; background: #79554 brown; color: white; border: none; border-radius: 20px; cursor: pointer; font-weight: bold; text-decoration: none; background: #795548; }
     </style>
 </head>
 <body>
-    <h1>🎮 لعبة الدبابات الكلاسيكية - اتاري</h1>
-    <div class="game-container">
-        <iframe src="https://retrogames.cc" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true"></iframe>
+    <h1>🪖 لعبة حرب الدبابات الكلاسيكية 🪖</h1>
+    <p>تحرك يميناً ويساراً وأطلق النار لتدمير دبابات الأعداء وتجنب الاصطدام بها!</p>
+    <div class="score-board">💥 الدبابات المدمرة: <span id="score">0</span></div>
+    <canvas id="tankCanvas" width="320" height="350"></canvas>
+    <div class="btn-container">
+        <button class="btn" onclick="move(-20)">◀ يسار</button>
+        <button class="btn" onclick="shoot()" style="background:#d32f2f;">🔥 إطلاق</button>
+        <button class="btn" onclick="move(20)">يمين ▶</button>
     </div>
-    <a href="index.html" class="back-btn">⬅ العودة للقائمة الرئيسية</a>
+    <br>
+    <a href="index.html" class="btn" style="background:#555;">⬅ العودة للرئيسية</a>
+
+    <script>
+        const canvas = document.getElementById("tankCanvas");
+        const ctx = canvas.getContext("2d");
+        let tankX = 140, enemies = [], bullets = [], score = 0;
+
+        function move(dir) { if (tankX + dir >= 0 && tankX + dir <= 280) tankX += dir; }
+        function shoot() { bullets.push({ x: tankX + 17, y: 310 }); }
+
+        function spawnEnemy() { if (Math.random() < 0.03 && enemies.length < 4) enemies.push({ x: Math.random() * 280, y: 0, speed: 2 }); }
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = "#4caf50"; ctx.fillRect(tankX, 310, 40, 30); ctx.fillRect(tankX + 15, 290, 10, 20); // لاعب
+            ctx.fillStyle = "#f44336"; enemies.forEach(e => ctx.fillRect(e.x, e.y, 35, 30)); // أعداء
+            ctx.fillStyle = "#ffd700"; bullets.forEach(b => ctx.fillRect(b.x, b.y, 6, 12)); // رصاص
+        }
+
+        function update() {
+            bullets.forEach((b, bi) => { b.y -= 5; if (b.y < 0) bullets.splice(bi, 1); });
+            enemies.forEach((e, ei) => {
+                e.y += e.speed;
+                if (e.y > 350) { enemies.splice(ei, 1); }
+                bullets.forEach((b, bi) => {
+                    if (b.x > e.x && b.x < e.x + 35 && b.y > e.y && b.y < e.y + 30) {
+                        enemies.splice(ei, 1); bullets.splice(bi, 1); score++; document.getElementById("score").innerText = score;
+                    }
+                });
+                if (e.x < tankX + 40 && e.x + 35 > tankX && e.y < 340 && e.y + 30 > 310) { alert("خسرت! النتيجة: " + score); score = 0; enemies = []; document.getElementById("score").innerText = 0; }
+            });
+            spawnEnemy();
+        }
+        function loop() { draw(); update(); requestAnimationFrame(loop); }
+        loop();
+    </script>
 </body>
 </html>
-
