@@ -5,34 +5,58 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>لعبة سونيك السريع</title>
     <style>
-        body { background: #111; color: #fff; text-align: center; font-family: sans-serif; margin: 0; padding: 20px; }
-        canvas { background: #002244; display: block; margin: 20px auto; border: 4px solid #0054a6; border-radius: 10px; max-width: 100%; }
-        .btn { padding: 15px 30px; font-size: 18px; background: #0054a6; color: white; border: none; border-radius: 25px; cursor: pointer; font-weight: bold; text-decoration: none; display: inline-block; margin: 10px; }
+        body { background: #111; color: #fff; text-align: center; font-family: sans-serif; margin: 0; padding: 10px; }
+        .score-board { font-size: 20px; font-weight: bold; color: #ffd700; margin: 10px 0; }
+        canvas { background: #002244; display: block; margin: 10px auto; border: 4px solid #0054a6; border-radius: 10px; max-width: 95%; height: auto; }
+        .btn-container { display: flex; justify-content: center; gap: 20px; margin-top: 15px; }
+        .btn { padding: 15px 35px; font-size: 18px; background: #0054a6; color: white; border: none; border-radius: 25px; cursor: pointer; font-weight: bold; text-decoration: none; box-shadow: 0 4px #003973; }
+        .btn:active { box-shadow: none; transform: translateY(4px); }
     </style>
 </head>
 <body>
+
     <h1>🌀 لعبة سونيك وتجميع الحلقات 🌀</h1>
     <p>احرك يميناً ويساراً لتجميع أكبر عدد من الحلقات الذهبية!</p>
-    <canvas id="sonicCanvas" width="360" height="400"></canvas>
+    
+    <!-- نقلنا النتيجة خارج الصندوق لحل مشكلة الاختفاء على الموبايل -->
+    <div class="score-board">💰 الحلقات المستلمة: <span id="scoreNum">0</span></div>
+
+    <canvas id="sonicCanvas" width="320" height="380"></canvas>
+    
+    <div class="btn-container">
+        <button class="btn" onclick="moveLeft()">◀ يسار</button>
+        <button class="btn" onclick="moveRight()">يمين ▶</button>
+    </div>
     <br>
-    <button class="btn" onclick="moveLeft()">◀ يسار</button>
-    <button class="btn" onclick="moveRight()">يمين ▶</button>
-    <br>
-    <a href="index.html" class="btn" style="background:#555;">⬅ العودة للرئيسية</a>
+    <a href="index.html" class="btn" style="background:#555; box-shadow: 0 4px #333;">⬅ العودة للرئيسية</a>
 
     <script>
         const canvas = document.getElementById("sonicCanvas");
         const ctx = canvas.getContext("2d");
-        let sonic = { x: 160, y: 340, w: 30, h: 30, speed: 20 };
-        let ring = { x: Math.random() * 320, y: 0, r: 8, speed: 4 };
+        const scoreNum = document.getElementById("scoreNum");
+
+        let sonic = { x: 140, y: 320, w: 40, h: 40, speed: 25 };
+        let ring = { x: Math.random() * 280 + 10, y: 0, r: 10, speed: 4 };
         let score = 0;
 
         function draw() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            // سونيك (مربع أزرق)
+            
+            // رسم خلفية شبكية بسيطة كأنها لعبة قديمة
+            ctx.strokeStyle = "rgba(0, 84, 166, 0.1)";
+            for(let i=0; i<canvas.width; i+=20) ctx.strokeRect(i, 0, 20, canvas.height);
+
+            // رسم سونيك (مربع أزرق مع عيون ماريو/سونيك بيضاء لتمييزه)
             ctx.fillStyle = "#0054a6";
             ctx.fillRect(sonic.x, sonic.y, sonic.w, sonic.h);
-            // الحلقة الذهبية
+            ctx.fillStyle = "#fff";
+            ctx.fillRect(sonic.x + 8, sonic.y + 10, 8, 12);
+            ctx.fillRect(sonic.x + 24, sonic.y + 10, 8, 12);
+            ctx.fillStyle = "#000";
+            ctx.fillRect(sonic.x + 12, sonic.y + 14, 4, 6);
+            ctx.fillRect(sonic.x + 24, sonic.y + 14, 4, 6);
+
+            // رسم الحلقة الذهبية اللامعة
             ctx.beginPath();
             ctx.arc(ring.x, ring.y, ring.r, 0, Math.PI * 2);
             ctx.fillStyle = "#ffd700";
@@ -40,26 +64,36 @@
             ctx.lineWidth = 3;
             ctx.strokeStyle = "#ffaa00";
             ctx.stroke();
-            // النتيجة
-            ctx.fillStyle = "#fff";
-            ctx.font = "18px sans-serif";
-            ctx.fillText("الحلقات المستلمة: " + score, 20, 30);
         }
 
         function update() {
             ring.y += ring.speed;
-            if (ring.y > canvas.height) { ring.y = 0; ring.x = Math.random() * 320; }
-            // لمس الحلقة
+            if (ring.y > canvas.height) { 
+                ring.y = 0; 
+                ring.x = Math.random() * 280 + 10; 
+            }
+            
+            // كشف لمس الحلقة بدقة أكبر
             if (ring.x > sonic.x && ring.x < sonic.x + sonic.w && ring.y > sonic.y && ring.y < sonic.y + sonic.h) {
-                score++; ring.y = 0; ring.x = Math.random() * 320; ring.speed += 0.3;
+                score++;
+                scoreNum.innerText = score; // تحديث العداد الخارجي
+                ring.y = 0; 
+                ring.x = Math.random() * 280 + 10; 
+                ring.speed += 0.3; // زيادة السرعة تدريجياً لزيادة الحماس
             }
         }
 
         function moveLeft() { if (sonic.x > 0) sonic.x -= sonic.speed; }
         function moveRight() { if (sonic.x < canvas.width - sonic.w) sonic.x += sonic.speed; }
+        
+        // دعم أزرار الكيبورد للكمبيوتر أيضاً
+        window.addEventListener("keydown", function(e) {
+            if(e.key === "ArrowLeft") moveLeft();
+            if(e.key === "ArrowRight") moveRight();
+        });
+
         function loop() { draw(); update(); requestAnimationFrame(loop); }
         loop();
     </script>
 </body>
 </html>
-
