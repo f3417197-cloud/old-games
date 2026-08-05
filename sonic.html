@@ -3,21 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لعبة سونيك القنفذ</title>
+    <title>لعبة سونيك السريع</title>
     <style>
         body { background: #111; color: #fff; text-align: center; font-family: sans-serif; margin: 0; padding: 20px; }
-        .game-container { max-width: 800px; margin: 20px auto; background: #222; padding: 10px; border-radius: 10px; box-shadow: 0 0 15px rgba(0,0,0,0.5); }
-        iframe { width: 100%; height: 500px; border: none; border-radius: 5px; }
-        .back-btn { display: inline-block; padding: 12px 24px; background: #0054a6; color: white; text-decoration: none; border-radius: 25px; margin-top: 20px; font-weight: bold; }
-        .back-btn:hover { background: #003973; }
+        canvas { background: #002244; display: block; margin: 20px auto; border: 4px solid #0054a6; border-radius: 10px; max-width: 100%; }
+        .btn { padding: 15px 30px; font-size: 18px; background: #0054a6; color: white; border: none; border-radius: 25px; cursor: pointer; font-weight: bold; text-decoration: none; display: inline-block; margin: 10px; }
     </style>
 </head>
 <body>
-    <h1>🎮 لعبة سونيك القنفذ</h1>
-    <div class="game-container">
-        <iframe src="https://retrogames.cc" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true"></iframe>
-    </div>
-    <a href="index.html" class="back-btn">⬅ العودة للقائمة الرئيسية</a>
+    <h1>🌀 لعبة سونيك وتجميع الحلقات 🌀</h1>
+    <p>احرك يميناً ويساراً لتجميع أكبر عدد من الحلقات الذهبية!</p>
+    <canvas id="sonicCanvas" width="360" height="400"></canvas>
+    <br>
+    <button class="btn" onclick="moveLeft()">◀ يسار</button>
+    <button class="btn" onclick="moveRight()">يمين ▶</button>
+    <br>
+    <a href="index.html" class="btn" style="background:#555;">⬅ العودة للرئيسية</a>
+
+    <script>
+        const canvas = document.getElementById("sonicCanvas");
+        const ctx = canvas.getContext("2d");
+        let sonic = { x: 160, y: 340, w: 30, h: 30, speed: 20 };
+        let ring = { x: Math.random() * 320, y: 0, r: 8, speed: 4 };
+        let score = 0;
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            // سونيك (مربع أزرق)
+            ctx.fillStyle = "#0054a6";
+            ctx.fillRect(sonic.x, sonic.y, sonic.w, sonic.h);
+            // الحلقة الذهبية
+            ctx.beginPath();
+            ctx.arc(ring.x, ring.y, ring.r, 0, Math.PI * 2);
+            ctx.fillStyle = "#ffd700";
+            ctx.fill();
+            ctx.lineWidth = 3;
+            ctx.strokeStyle = "#ffaa00";
+            ctx.stroke();
+            // النتيجة
+            ctx.fillStyle = "#fff";
+            ctx.font = "18px sans-serif";
+            ctx.fillText("الحلقات المستلمة: " + score, 20, 30);
+        }
+
+        function update() {
+            ring.y += ring.speed;
+            if (ring.y > canvas.height) { ring.y = 0; ring.x = Math.random() * 320; }
+            // لمس الحلقة
+            if (ring.x > sonic.x && ring.x < sonic.x + sonic.w && ring.y > sonic.y && ring.y < sonic.y + sonic.h) {
+                score++; ring.y = 0; ring.x = Math.random() * 320; ring.speed += 0.3;
+            }
+        }
+
+        function moveLeft() { if (sonic.x > 0) sonic.x -= sonic.speed; }
+        function moveRight() { if (sonic.x < canvas.width - sonic.w) sonic.x += sonic.speed; }
+        function loop() { draw(); update(); requestAnimationFrame(loop); }
+        loop();
+    </script>
 </body>
 </html>
 
