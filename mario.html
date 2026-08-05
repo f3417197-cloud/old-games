@@ -3,22 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لعبة سوبر ماريو الأصلية</title>
+    <title>لعبة ماريو القافز</title>
     <style>
-        body { background: #111; color: #fff; text-align: center; font-family: sans-serif; margin: 0; padding: 20px; }
-        .game-container { max-width: 800px; margin: 20px auto; background: #222; padding: 10px; border-radius: 10px; box-shadow: 0 0 15px rgba(0,0,0,0.5); }
-        iframe { width: 100%; height: 500px; border: none; border-radius: 5px; }
-        .back-btn { display: inline-block; padding: 12px 24px; background: #e52521; color: white; text-decoration: none; border-radius: 25px; margin-top: 20px; font-weight: bold; }
-        .back-btn:hover { background: #b31815; }
+        body { background: #222; color: #fff; text-align: center; font-family: sans-serif; margin: 0; padding: 20px; overflow: hidden; }
+        canvas { background: #5c94fc; display: block; margin: 20px auto; border: 4px solid #fff; border-radius: 10px; max-width: 100%; }
+        .btn { padding: 15px 30px; font-size: 18px; background: #e52521; color: white; border: none; border-radius: 25px; cursor: pointer; font-weight: bold; text-decoration: none; display: inline-block; margin: 10px; }
     </style>
 </head>
 <body>
-    <h1>🎮 لعبة سوبر ماريو الكلاسيكية</h1>
-    <div class="game-container">
-        <!-- تشغيل اللعبة مباشرة داخل الموقع -->
-        <iframe src="https://retrogames.cc" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true"></iframe>
-    </div>
-    <a href="index.html" class="back-btn">⬅ العودة للقائمة الرئيسية</a>
+    <h1>🍄 لعبة ماريو القافز 🍄</h1>
+    <p>اضغط على الشاشة أو زر القفز لتفادي العقبات!</p>
+    <canvas id="gameCanvas" width="400" height="200"></canvas>
+    <br>
+    <button class="btn" onclick="jump()">إقفز! 🚀</button>
+    <br>
+    <a href="index.html" class="btn" style="background:#555;">⬅ العودة للرئيسية</a>
+
+    <script>
+        const canvas = document.getElementById("gameCanvas");
+        const ctx = canvas.getContext("2d");
+        let mario = { x: 50, y: 140, w: 20, h: 30, dy: 0, jumping: false };
+        let obstacle = { x: 400, y: 150, w: 15, h: 20, speed: 4 };
+        let score = 0;
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            // الأرضية
+            ctx.fillStyle = "#fcb444";
+            ctx.fillRect(0, 170, canvas.width, 30);
+            // ماريو (مربع أحمر)
+            ctx.fillStyle = "#e52521";
+            ctx.fillRect(mario.x, mario.y, mario.w, mario.h);
+            // العقبة (مربع أخضر)
+            ctx.fillStyle = "#00a2ff";
+            ctx.fillRect(obstacle.x, obstacle.y, obstacle.w, obstacle.h);
+            // النتيجة
+            ctx.fillStyle = "#fff";
+            ctx.font = "16px sans-serif";
+            ctx.fillText("النقاط: " + score, 20, 30);
+        }
+
+        function update() {
+            if (mario.jumping) {
+                mario.dy += 0.6; // الجاذبية
+                mario.y += mario.dy;
+                if (mario.y >= 140) { mario.y = 140; mario.jumping = false; }
+            }
+            obstacle.x -= obstacle.speed;
+            if (obstacle.x < -20) { obstacle.x = 400; score++; obstacle.speed += 0.2; }
+            // كشف الاصطدام
+            if (obstacle.x < mario.x + mario.w && obstacle.x + obstacle.w > mario.x && obstacle.y < mario.y + mario.h) {
+                alert("انتهت اللعبة! نقاطك: " + score);
+                score = 0; obstacle.x = 400; obstacle.speed = 4;
+            }
+        }
+
+        function jump() { if (!mario.jumping) { mario.jumping = true; mario.dy = -10; } }
+        canvas.addEventListener("touchstart", jump);
+        function loop() { draw(); update(); requestAnimationFrame(loop); }
+        loop();
+    </script>
 </body>
 </html>
-
